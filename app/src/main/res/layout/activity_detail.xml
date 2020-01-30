@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".Detail.DetailActivity">
+
+    <ImageView
+        android:id="@+id/detail_movie_poster"
+        android:layout_width="200dp"
+        android:layout_height="300dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/parsed_poster_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detail_movie_title" />
+
+    <TextView
+        android:id="@+id/detail_movie_title"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:contentDescription="@string/parsed_movie_title"
+        android:textSize="40sp"
+        android:textAlignment="center"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/colorWhite"
+        app:fontFamily="sans-serif-condensed-medium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/detail_release_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="32dp"
+        android:contentDescription="@string/parsed_release_date"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/detail_movie_poster"
+        app:layout_constraintTop_toBottomOf="@+id/detail_movie_title" />
+
+    <TextView
+        android:id="@+id/detail_vote_average"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="32dp"
+        android:contentDescription="@string/parsed_vote_average"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/detail_movie_poster"
+        app:layout_constraintTop_toBottomOf="@+id/detail_release_date" />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="32dp"
+        android:background="@color/colorGlowGreen"
+        android:text="@string/favorites_option"
+        app:layout_constraintStart_toEndOf="@+id/detail_movie_poster"
+        app:layout_constraintTop_toBottomOf="@+id/detail_vote_average" />
+
+    <TextView
+        android:id="@+id/detail_plot_synopsis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="32dp"
+        android:contentDescription="@string/parsed_plot_synopsis"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detail_movie_poster" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/detail_trailers_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toBottomOf="@+id/detail_plot_synopsis" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/detail_reviews_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toBottomOf="@+id/detail_trailers_recyclerview"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
