@@ -72,7 +72,7 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.Traile
     public void onBindViewHolder(@NonNull TrailerItemsViewHolder holder, int position) {
 
         Movie trailer = trailersArrayList.get(position);
-        holder.trailerImage.setImageResource(trailer.getTrailerPlayImage());
+        holder.trailerImage.setImageResource(trailer.getImagesForDetailLists());
     }
 
     @Override

@@ -36,12 +36,12 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewIt
     public class ReviewItemsViewHolder extends RecyclerView.ViewHolder {
 
         private ArrayList<Movie> reviewsArrayList;
-        private ImageView movieImage;
+        private ImageView reviewImage;
 
         public ReviewItemsViewHolder(@NonNull View itemView, ArrayList<Movie> movieArrayList) {
             super(itemView);
 
-            movieImage = itemView.findViewById(R.id.movie_image_icon);
+            reviewImage = itemView.findViewById(R.id.movie_image_icon);
             this.reviewsArrayList = movieArrayList;
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -70,8 +70,9 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewIt
     @Override
     public void onBindViewHolder(@NonNull ReviewItemsViewHolder holder, int position) {
 
-        Movie movie = reviewsArrayList.get(position);
-        String movieImageUrl = movie.getMovieImageUrl();
+        Movie review = reviewsArrayList.get(position);
+        holder.reviewImage.setImageResource(review.getImagesForDetailLists());
+
     }
 
     @Override

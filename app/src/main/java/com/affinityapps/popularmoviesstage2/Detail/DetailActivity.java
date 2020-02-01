@@ -1,14 +1,21 @@
 package com.affinityapps.popularmoviesstage2.Detail;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.affinityapps.popularmoviesstage2.Main.MainActivity;
+import com.affinityapps.popularmoviesstage2.Main.Movie;
+import com.affinityapps.popularmoviesstage2.Main.MovieAdapter;
 import com.affinityapps.popularmoviesstage2.R;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 import static com.affinityapps.popularmoviesstage2.Main.MainActivity.EXTRA_MOVIE_ID;
 import static com.affinityapps.popularmoviesstage2.Main.MainActivity.EXTRA_PLOT_SYNOPSIS;
@@ -19,10 +26,44 @@ import static com.affinityapps.popularmoviesstage2.Main.MainActivity.EXTRA_VOTE_
 
 public class DetailActivity extends AppCompatActivity {
 
+    private ArrayList<Movie> trailerList;
+    private ArrayList<Movie> reviewList;
+    private RecyclerView trailerRecyclerView;
+    private RecyclerView reviewRecyclerView;
+    private RecyclerView.LayoutManager trailerLayoutManager;
+    private RecyclerView.LayoutManager reviewLayoutManager;
+    private TrailersAdapter trailersAdapter;
+    private ReviewsAdapter reviewsAdapter;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
+        trailerList = new ArrayList<>();
+        trailerList.add(new Movie(R.drawable.ic_play_arrow_black_24dp));
+        trailerList.add(new Movie(R.drawable.ic_play_arrow_black_24dp));
+        trailerList.add(new Movie(R.drawable.ic_play_arrow_black_24dp));
+
+        trailerRecyclerView = findViewById(R.id.detail_trailers_recyclerview);
+        trailerRecyclerView.setHasFixedSize(true);
+        trailerLayoutManager = new LinearLayoutManager(this);
+        trailerRecyclerView.setLayoutManager(trailerLayoutManager);
+        trailersAdapter = new TrailersAdapter(this, trailerList);
+        trailerRecyclerView.setAdapter(trailersAdapter);
+
+        reviewList = new ArrayList<>();
+        reviewList.add(new Movie(R.drawable.ic_block_black_24dp));
+        reviewList.add(new Movie(R.drawable.ic_block_black_24dp));
+        reviewList.add(new Movie(R.drawable.ic_block_black_24dp));
+
+        reviewRecyclerView = findViewById(R.id.detail_reviews_recyclerview);
+        reviewRecyclerView.setHasFixedSize(true);
+        reviewLayoutManager = new LinearLayoutManager(this);
+        reviewRecyclerView.setLayoutManager(reviewLayoutManager);
+        reviewsAdapter = new ReviewsAdapter(this, reviewList);
+        reviewRecyclerView.setAdapter(reviewsAdapter);
 
         Intent intent = getIntent();
         String movieImageUrl2 = intent.getStringExtra(EXTRA_URL);

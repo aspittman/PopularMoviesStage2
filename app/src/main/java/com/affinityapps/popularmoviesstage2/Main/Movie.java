@@ -8,15 +8,20 @@ public class Movie {
     private int voteAverage;
     private String plotSynopsis;
     private int movieId;
-    private int trailerPlayImage;
+    private int imagesForDetailLists;
 
-    public Movie (String movieImageUrl, String title, String releaseDate, int voteAverage, String plotSynopsis) {
+
+    public Movie (String movieImageUrl, String title, String releaseDate, int voteAverage, String plotSynopsis, int movieId) {
         this.movieImageUrl = movieImageUrl;
         this.title = title;
         this.releaseDate = releaseDate;
         this.voteAverage = voteAverage;
         this.plotSynopsis = plotSynopsis;
         this.movieId = movieId;
+    }
+
+    public Movie (int imagesForDetailLists) {
+        this.imagesForDetailLists = imagesForDetailLists;
     }
 
 
@@ -64,7 +69,7 @@ public class Movie {
 
     public void setMovieId(int movieId) { this.movieId = movieId; }
 
-    public int getTrailerPlayImage() { return trailerPlayImage; }
+    public int getImagesForDetailLists() { return imagesForDetailLists; }
 
-    public void setTrailerPlayImage(int trailerPlayImage) { this.trailerPlayImage = trailerPlayImage; }
+    public void setImagesForDetailLists(int imagesForDetailLists) { this.imagesForDetailLists = imagesForDetailLists; }
 }

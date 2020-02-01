@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnIt
                                 String plotSynopsisPath = results.getString("overview");
                                 int idPath = results.getInt("id");
 
-                                movieData.add(new Movie(movieBaseUrl + posterPath, titlePath, releaseDatePath, voteAveragePath, plotSynopsisPath));
+                                movieData.add(new Movie(movieBaseUrl + posterPath, titlePath, releaseDatePath, voteAveragePath, plotSynopsisPath, idPath));
                             }
 
                             movieAdapter = new MovieAdapter(MainActivity.this, movieData);
