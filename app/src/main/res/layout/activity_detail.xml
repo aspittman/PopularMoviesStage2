@@ -82,12 +82,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/detail_movie_poster" />
 
+    <View
+        android:id="@+id/detail_separator_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorBlack"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toBottomOf="@+id/detail_plot_synopsis"/>
+
+    <TextView
+        android:id="@+id/textview_for_trailors"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/beginning_of_trailers"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detail_separator_line" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/detail_trailers_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        app:layout_constraintTop_toBottomOf="@+id/detail_plot_synopsis" />
+        app:layout_constraintTop_toBottomOf="@+id/textview_for_trailors" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/detail_reviews_recyclerview"

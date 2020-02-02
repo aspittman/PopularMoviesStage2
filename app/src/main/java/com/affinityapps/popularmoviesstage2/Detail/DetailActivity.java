@@ -5,7 +5,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,7 +26,9 @@ import static com.affinityapps.popularmoviesstage2.Main.MainActivity.EXTRA_TITLE
 import static com.affinityapps.popularmoviesstage2.Main.MainActivity.EXTRA_URL;
 import static com.affinityapps.popularmoviesstage2.Main.MainActivity.EXTRA_VOTE_AVERAGE;
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity
+        implements TrailersAdapter.OnLinkClickListener,
+        ReviewsAdapter.OnDescriptionClickListener {
 
     private ArrayList<Movie> trailerList;
     private ArrayList<Movie> reviewList;
@@ -53,6 +57,9 @@ public class DetailActivity extends AppCompatActivity {
         trailersAdapter = new TrailersAdapter(this, trailerList);
         trailerRecyclerView.setAdapter(trailersAdapter);
 
+        trailersAdapter.setOnLinkClickListener(DetailActivity.this);
+
+
         reviewList = new ArrayList<>();
         reviewList.add(new Movie(R.drawable.ic_block_black_24dp));
         reviewList.add(new Movie(R.drawable.ic_block_black_24dp));
@@ -64,6 +71,9 @@ public class DetailActivity extends AppCompatActivity {
         reviewRecyclerView.setLayoutManager(reviewLayoutManager);
         reviewsAdapter = new ReviewsAdapter(this, reviewList);
         reviewRecyclerView.setAdapter(reviewsAdapter);
+
+        reviewsAdapter.setOnDescriptionClickListener(this);
+
 
         Intent intent = getIntent();
         String movieImageUrl2 = intent.getStringExtra(EXTRA_URL);
@@ -92,8 +102,25 @@ public class DetailActivity extends AppCompatActivity {
         textViewPlotSynopsis.setText(moviePlotSynopsis2);
 
     }
+
+
+    @Override
+    public void onDescriptionClick(int position) {
+        Intent reviewsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.themoviedb.org/review/5463856c0e0a267815002598"));
+        startActivity(reviewsIntent);
+    }
+
+    @Override
+    public void onLinkClick(int position) {
+        Intent trailersIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=2LqzF5WauAw"));
+        startActivity(trailersIntent);
+
+    }
+
     // Replace 157336 with an parse id of the movies on the MainActivity list
     // http://api.themoviedb.org/3/movie/157336/videos?api_key=0985d7dead91a911264472433eb9c5dc
     // http://api.themoviedb.org/3/movie/157336/reviews?api_key=0985d7dead91a911264472433eb9c5dc
     // Parse the id key from the other two urls to put into these urls
+    // https://www.youtube.com/watch?v=put key here for trailers
+    // https://www.themoviedb.org/review/put id here for reviews
 }

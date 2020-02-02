@@ -23,9 +23,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewIt
         void onDescriptionClick(int position);
     }
 
-    public void setOnLinkClickListener(OnDescriptionClickListener listener) {
-        this.listener = listener;
-    }
+    public void setOnDescriptionClickListener(OnDescriptionClickListener listener) { this.listener = listener; }
 
 
     public ReviewsAdapter(Context context, ArrayList<Movie> reviewsArrayList) {
@@ -38,11 +36,11 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewIt
         private ArrayList<Movie> reviewsArrayList;
         private ImageView reviewImage;
 
-        public ReviewItemsViewHolder(@NonNull View itemView, ArrayList<Movie> movieArrayList) {
+        public ReviewItemsViewHolder(@NonNull View itemView, ArrayList<Movie> reviewsArrayList) {
             super(itemView);
 
             reviewImage = itemView.findViewById(R.id.movie_image_icon);
-            this.reviewsArrayList = movieArrayList;
+            this.reviewsArrayList = reviewsArrayList;
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
