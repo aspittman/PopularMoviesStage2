@@ -7,7 +7,7 @@
     android:layout_height="100dp" >
 
     <ImageView
-        android:id="@+id/trailer_image_icon"
+        android:id="@+id/review_image_icon"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_marginStart="40dp"
@@ -25,9 +25,8 @@
         android:layout_marginStart="64dp"
         android:layout_marginLeft="64dp"
         android:layout_marginTop="48dp"
-        app:layout_constraintStart_toEndOf="@id/trailer_image_icon"
+        app:layout_constraintStart_toEndOf="@id/review_image_icon"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <View
         android:id="@+id/detail_separator_line"

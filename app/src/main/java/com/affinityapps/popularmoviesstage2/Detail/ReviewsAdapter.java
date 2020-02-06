@@ -39,10 +39,10 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewIt
         public ReviewItemsViewHolder(@NonNull View itemView, ArrayList<Movie> reviewsArrayList) {
             super(itemView);
 
-            reviewImage = itemView.findViewById(R.id.movie_image_icon);
+            reviewImage = itemView.findViewById(R.id.review_image_icon);
             this.reviewsArrayList = reviewsArrayList;
 
-            itemView.setOnClickListener(new View.OnClickListener() {
+            reviewImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(listener != null) {
@@ -60,7 +60,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewIt
     @Override
     public ReviewItemsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.movie_items, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.review_items, parent, false);
         ReviewItemsViewHolder reviewItemsViewHolder = new ReviewItemsViewHolder(view, reviewsArrayList);
         return reviewItemsViewHolder;
     }

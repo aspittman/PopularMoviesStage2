@@ -13,4 +13,5 @@
     <string name="parsed_plot_synopsis">Movie Plot Synopsis</string>
     <string name="parsed_fraction">/10</string>
     <string name="beginning_of_trailers">Trailers: </string>
+    <string name="beginning_of_reviews">Reviews: </string>
 </resources>

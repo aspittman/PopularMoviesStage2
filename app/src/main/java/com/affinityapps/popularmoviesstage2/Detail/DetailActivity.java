@@ -15,7 +15,17 @@ import com.affinityapps.popularmoviesstage2.Main.MainActivity;
 import com.affinityapps.popularmoviesstage2.Main.Movie;
 import com.affinityapps.popularmoviesstage2.Main.MovieAdapter;
 import com.affinityapps.popularmoviesstage2.R;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -38,6 +48,10 @@ public class DetailActivity extends AppCompatActivity
     private RecyclerView.LayoutManager reviewLayoutManager;
     private TrailersAdapter trailersAdapter;
     private ReviewsAdapter reviewsAdapter;
+    private RequestQueue requestTrailerQueue;
+    private RequestQueue requestReviewQueue;
+    private static String trailerJsonPage;
+    private static String reviewJsonPage;
 
 
     @Override
@@ -46,9 +60,6 @@ public class DetailActivity extends AppCompatActivity
         setContentView(R.layout.activity_detail);
 
         trailerList = new ArrayList<>();
-        trailerList.add(new Movie(R.drawable.ic_play_arrow_black_24dp));
-        trailerList.add(new Movie(R.drawable.ic_play_arrow_black_24dp));
-        trailerList.add(new Movie(R.drawable.ic_play_arrow_black_24dp));
 
         trailerRecyclerView = findViewById(R.id.detail_trailers_recyclerview);
         trailerRecyclerView.setHasFixedSize(true);
@@ -61,9 +72,6 @@ public class DetailActivity extends AppCompatActivity
 
 
         reviewList = new ArrayList<>();
-        reviewList.add(new Movie(R.drawable.ic_block_black_24dp));
-        reviewList.add(new Movie(R.drawable.ic_block_black_24dp));
-        reviewList.add(new Movie(R.drawable.ic_block_black_24dp));
 
         reviewRecyclerView = findViewById(R.id.detail_reviews_recyclerview);
         reviewRecyclerView.setHasFixedSize(true);
@@ -84,6 +92,8 @@ public class DetailActivity extends AppCompatActivity
 
         //Movie id below gets parsed into the url for reviews and trailers
         int movieId2 = intent.getIntExtra(EXTRA_MOVIE_ID, 0);
+        trailerJsonPage = "http://api.themoviedb.org/3/movie/"+movieId2+"/videos?api_key=0985d7dead91a911264472433eb9c5dc";
+        reviewJsonPage = "http://api.themoviedb.org/3/movie/"+movieId2+"/reviews?api_key=0985d7dead91a911264472433eb9c5dc";
 
         ImageView imageView = findViewById(R.id.detail_movie_poster);
         TextView textViewTitle = findViewById(R.id.detail_movie_title);
@@ -101,20 +111,96 @@ public class DetailActivity extends AppCompatActivity
         textViewVoteAverage.setText(movieVoteAverage2 + "/10");
         textViewPlotSynopsis.setText(moviePlotSynopsis2);
 
+
+        requestTrailerQueue = Volley.newRequestQueue(this);
+        parseTrailerData(trailerJsonPage);
+
+        requestReviewQueue = Volley.newRequestQueue(this);
+        parseReviewData(reviewJsonPage);
     }
 
+    public void parseTrailerData(String url) {
 
-    @Override
-    public void onDescriptionClick(int position) {
-        Intent reviewsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.themoviedb.org/review/5463856c0e0a267815002598"));
-        startActivity(reviewsIntent);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray jsonArray = response.getJSONArray("results");
+
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject results = jsonArray.getJSONObject(i);
+
+                                String trailersKeyPath = results.getString("key");
+
+                                trailerList.add(new Movie(R.drawable.ic_play_arrow_black_24dp));
+                            }
+
+                            trailersAdapter = new TrailersAdapter(DetailActivity.this, trailerList);
+                            trailerRecyclerView.setAdapter(trailersAdapter);
+                            trailersAdapter.setOnLinkClickListener(DetailActivity.this);
+
+                        }catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        requestTrailerQueue.add(jsonObjectRequest);
     }
+
+    public void parseReviewData(String url) {
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray jsonArray = response.getJSONArray("results");
+
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject results = jsonArray.getJSONObject(i);
+
+                                String reviewsIdPath = results.getString("id");
+
+                                reviewList.add(new Movie(R.drawable.ic_message_black_24dp));
+                            }
+
+                            reviewsAdapter = new ReviewsAdapter(DetailActivity.this, reviewList);
+                            reviewRecyclerView.setAdapter(reviewsAdapter);
+                            reviewsAdapter.setOnDescriptionClickListener(DetailActivity.this);
+
+                        }catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        requestReviewQueue.add(jsonObjectRequest);
+    }
+
 
     @Override
     public void onLinkClick(int position) {
         Intent trailersIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=2LqzF5WauAw"));
         startActivity(trailersIntent);
 
+    }
+
+    @Override
+    public void onDescriptionClick(int position) {
+        Intent reviewsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.themoviedb.org/review/5463856c0e0a267815002598"));
+        startActivity(reviewsIntent);
     }
 
     // Replace 157336 with an parse id of the movies on the MainActivity list

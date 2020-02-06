@@ -45,7 +45,7 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.Traile
             trailerImage = itemView.findViewById(R.id.trailer_image_icon);
             this.trailersArrayList = trailersArrayList;
 
-            itemView.setOnClickListener(new View.OnClickListener() {
+            trailerImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(listener != null) {
