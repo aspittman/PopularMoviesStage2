@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.affinityapps.popularmoviesstage2.Detail.DetailActivity;
+import com.affinityapps.popularmoviesstage2.Movie;
 import com.affinityapps.popularmoviesstage2.R;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;

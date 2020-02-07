@@ -1,4 +1,4 @@
-package com.affinityapps.popularmoviesstage2.Main;
+package com.affinityapps.popularmoviesstage2;
 
 public class Movie {
 
@@ -9,6 +9,8 @@ public class Movie {
     private String plotSynopsis;
     private int movieId;
     private int imagesForDetailLists;
+    private String rowNumber;
+    private String keyId;
 
 
     public Movie (String movieImageUrl, String title, String releaseDate, int voteAverage, String plotSynopsis, int movieId) {
@@ -20,8 +22,13 @@ public class Movie {
         this.movieId = movieId;
     }
 
-    public Movie (int imagesForDetailLists) {
+    public Movie (int imagesForDetailLists, String rowNumber) {
         this.imagesForDetailLists = imagesForDetailLists;
+        this.rowNumber = rowNumber;
+    }
+
+    public Movie(String keyId) {
+        this.keyId = keyId;
     }
 
 
@@ -33,6 +40,7 @@ public class Movie {
         this.movieImageUrl = movieImageUrl;
     }
 
+
     public String getTitle() {
         return title;
     }
@@ -40,6 +48,7 @@ public class Movie {
     public void setTitle(String title) {
         this.title = title;
     }
+
 
     public String getReleaseDate() {
         return releaseDate;
@@ -49,6 +58,7 @@ public class Movie {
         this.releaseDate = releaseDate;
     }
 
+
     public int getVoteAverage() {
         return voteAverage;
     }
@@ -56,6 +66,7 @@ public class Movie {
     public void setVoteAverage(int voteAverage) {
         this.voteAverage = voteAverage;
     }
+
 
     public String getPlotSynopsis() {
         return plotSynopsis;
@@ -65,11 +76,22 @@ public class Movie {
         this.plotSynopsis = plotSynopsis;
     }
 
+
     public int getMovieId() { return movieId; }
 
     public void setMovieId(int movieId) { this.movieId = movieId; }
 
+
     public int getImagesForDetailLists() { return imagesForDetailLists; }
 
     public void setImagesForDetailLists(int imagesForDetailLists) { this.imagesForDetailLists = imagesForDetailLists; }
+
+
+    public String getRowNumber() { return rowNumber; }
+
+    public void setRowNumber(String rowNumber) { this.rowNumber = rowNumber; }
+
+    public String getKeyId() { return keyId; }
+
+    public void setKeyId(String keyId) { this.keyId = keyId; }
 }

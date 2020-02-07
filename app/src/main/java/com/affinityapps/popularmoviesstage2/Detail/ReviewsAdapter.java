@@ -5,12 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.affinityapps.popularmoviesstage2.Main.Movie;
-import com.affinityapps.popularmoviesstage2.Main.MovieAdapter;
+import com.affinityapps.popularmoviesstage2.Movie;
 import com.affinityapps.popularmoviesstage2.R;
 import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewItemsViewHolder> {
@@ -35,11 +37,13 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewIt
 
         private ArrayList<Movie> reviewsArrayList;
         private ImageView reviewImage;
+        private TextView reviewRowNumber;
 
         public ReviewItemsViewHolder(@NonNull View itemView, ArrayList<Movie> reviewsArrayList) {
             super(itemView);
 
             reviewImage = itemView.findViewById(R.id.review_image_icon);
+            reviewRowNumber = itemView.findViewById(R.id.review_label);
             this.reviewsArrayList = reviewsArrayList;
 
             reviewImage.setOnClickListener(new View.OnClickListener() {
@@ -69,7 +73,13 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewIt
     public void onBindViewHolder(@NonNull ReviewItemsViewHolder holder, int position) {
 
         Movie review = reviewsArrayList.get(position);
-        holder.reviewImage.setImageResource(review.getImagesForDetailLists());
+        int descriptionButton = review.getImagesForDetailLists();
+        Picasso.get().
+                load(descriptionButton).
+                placeholder(R.drawable.ic_local_movies_black_24dp).
+                error(R.drawable.ic_block_black_24dp).
+                into(holder.reviewImage);
+        holder.reviewRowNumber.setText(review.getRowNumber());
 
     }
 

@@ -14,4 +14,6 @@
     <string name="parsed_fraction">/10</string>
     <string name="beginning_of_trailers">Trailers: </string>
     <string name="beginning_of_reviews">Reviews: </string>
+    <string name="trailer_row_number">Trailer </string>
+    <string name="review_row_number">Review </string>
 </resources>

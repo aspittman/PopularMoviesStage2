@@ -7,13 +7,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.affinityapps.popularmoviesstage2.Main.MainActivity;
-import com.affinityapps.popularmoviesstage2.Main.Movie;
-import com.affinityapps.popularmoviesstage2.Main.MovieAdapter;
+import com.affinityapps.popularmoviesstage2.Movie;
 import com.affinityapps.popularmoviesstage2.R;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -50,8 +47,10 @@ public class DetailActivity extends AppCompatActivity
     private ReviewsAdapter reviewsAdapter;
     private RequestQueue requestTrailerQueue;
     private RequestQueue requestReviewQueue;
-    private static String trailerJsonPage;
-    private static String reviewJsonPage;
+    private String trailerJsonPage;
+    private String reviewJsonPage;
+    private Movie trailerKey;
+    private Movie reviewId;
 
 
     @Override
@@ -61,6 +60,7 @@ public class DetailActivity extends AppCompatActivity
 
         trailerList = new ArrayList<>();
 
+
         trailerRecyclerView = findViewById(R.id.detail_trailers_recyclerview);
         trailerRecyclerView.setHasFixedSize(true);
         trailerLayoutManager = new LinearLayoutManager(this);
@@ -68,10 +68,9 @@ public class DetailActivity extends AppCompatActivity
         trailersAdapter = new TrailersAdapter(this, trailerList);
         trailerRecyclerView.setAdapter(trailersAdapter);
 
-        trailersAdapter.setOnLinkClickListener(DetailActivity.this);
-
 
         reviewList = new ArrayList<>();
+
 
         reviewRecyclerView = findViewById(R.id.detail_reviews_recyclerview);
         reviewRecyclerView.setHasFixedSize(true);
@@ -79,8 +78,6 @@ public class DetailActivity extends AppCompatActivity
         reviewRecyclerView.setLayoutManager(reviewLayoutManager);
         reviewsAdapter = new ReviewsAdapter(this, reviewList);
         reviewRecyclerView.setAdapter(reviewsAdapter);
-
-        reviewsAdapter.setOnDescriptionClickListener(this);
 
 
         Intent intent = getIntent();
@@ -90,16 +87,19 @@ public class DetailActivity extends AppCompatActivity
         int movieVoteAverage2 = intent.getIntExtra(EXTRA_VOTE_AVERAGE, 0);
         String moviePlotSynopsis2 = intent.getStringExtra(EXTRA_PLOT_SYNOPSIS);
 
+
         //Movie id below gets parsed into the url for reviews and trailers
         int movieId2 = intent.getIntExtra(EXTRA_MOVIE_ID, 0);
-        trailerJsonPage = "http://api.themoviedb.org/3/movie/"+movieId2+"/videos?api_key=0985d7dead91a911264472433eb9c5dc";
-        reviewJsonPage = "http://api.themoviedb.org/3/movie/"+movieId2+"/reviews?api_key=0985d7dead91a911264472433eb9c5dc";
+        trailerJsonPage = "https://api.themoviedb.org/3/movie/"+movieId2+"/videos?api_key=0985d7dead91a911264472433eb9c5dc";
+        reviewJsonPage = "https://api.themoviedb.org/3/movie/"+movieId2+"/reviews?api_key=0985d7dead91a911264472433eb9c5dc";
+
 
         ImageView imageView = findViewById(R.id.detail_movie_poster);
         TextView textViewTitle = findViewById(R.id.detail_movie_title);
         TextView textViewReleaseDate = findViewById(R.id.detail_release_date);
         TextView textViewVoteAverage = findViewById(R.id.detail_vote_average);
         TextView textViewPlotSynopsis = findViewById(R.id.detail_plot_synopsis);
+
 
         Picasso.get().load(movieImageUrl2).
                 placeholder(R.drawable.ic_local_movies_black_24dp).
@@ -133,7 +133,8 @@ public class DetailActivity extends AppCompatActivity
 
                                 String trailersKeyPath = results.getString("key");
 
-                                trailerList.add(new Movie(R.drawable.ic_play_arrow_black_24dp));
+                                trailerKey = new Movie(trailersKeyPath);
+                                trailerList.add(new Movie(R.drawable.ic_play_arrow_black_24dp, "Trailer " + trailerList.iterator()));
                             }
 
                             trailersAdapter = new TrailersAdapter(DetailActivity.this, trailerList);
@@ -168,7 +169,8 @@ public class DetailActivity extends AppCompatActivity
 
                                 String reviewsIdPath = results.getString("id");
 
-                                reviewList.add(new Movie(R.drawable.ic_message_black_24dp));
+                                reviewId = new Movie(reviewsIdPath);
+                                reviewList.add(new Movie(R.drawable.ic_message_black_24dp, "Review " + reviewList.iterator()));
                             }
 
                             reviewsAdapter = new ReviewsAdapter(DetailActivity.this, reviewList);
@@ -192,14 +194,14 @@ public class DetailActivity extends AppCompatActivity
 
     @Override
     public void onLinkClick(int position) {
-        Intent trailersIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=2LqzF5WauAw"));
+        Intent trailersIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=" + trailerKey.getKeyId()));
         startActivity(trailersIntent);
 
     }
 
     @Override
     public void onDescriptionClick(int position) {
-        Intent reviewsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.themoviedb.org/review/5463856c0e0a267815002598"));
+        Intent reviewsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.themoviedb.org/review/" + reviewId.getKeyId()));
         startActivity(reviewsIntent);
     }
 

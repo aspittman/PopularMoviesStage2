@@ -5,12 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.affinityapps.popularmoviesstage2.Main.Movie;
-import com.affinityapps.popularmoviesstage2.Main.MovieAdapter;
+import com.affinityapps.popularmoviesstage2.Movie;
 import com.affinityapps.popularmoviesstage2.R;
 import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.TrailerItemsViewHolder> {
@@ -38,11 +40,13 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.Traile
 
         private ArrayList<Movie> trailersArrayList;
         private ImageView trailerImage;
+        private TextView trailerRowNumber;
 
         public TrailerItemsViewHolder(@NonNull View itemView, ArrayList<Movie> trailersArrayList) {
             super(itemView);
 
             trailerImage = itemView.findViewById(R.id.trailer_image_icon);
+            trailerRowNumber = itemView.findViewById(R.id.trailer_label);
             this.trailersArrayList = trailersArrayList;
 
             trailerImage.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +76,13 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.Traile
     public void onBindViewHolder(@NonNull TrailerItemsViewHolder holder, int position) {
 
         Movie trailer = trailersArrayList.get(position);
-        holder.trailerImage.setImageResource(trailer.getImagesForDetailLists());
+        int playButton = trailer.getImagesForDetailLists();
+        Picasso.get().
+                load(playButton).
+                placeholder(R.drawable.ic_local_movies_black_24dp).
+                error(R.drawable.ic_block_black_24dp).
+                into(holder.trailerImage);
+        holder.trailerRowNumber.setText(trailer.getRowNumber());
     }
 
     @Override
