@@ -14,7 +14,6 @@
         android:layout_marginLeft="40dp"
         android:layout_marginTop="16dp"
         android:contentDescription="@string/parsed_poster_icon"
-        android:src="@drawable/ic_play_arrow_black_24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,11 +21,11 @@
         android:id="@+id/trailer_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginTop="48dp"
         android:text="@string/trailer_row_number"
         android:textStyle="bold"
-        android:layout_marginStart="64dp"
-        android:layout_marginLeft="64dp"
-        android:layout_marginTop="48dp"
         app:layout_constraintStart_toEndOf="@id/trailer_image_icon"
         app:layout_constraintTop_toTopOf="parent" />
 

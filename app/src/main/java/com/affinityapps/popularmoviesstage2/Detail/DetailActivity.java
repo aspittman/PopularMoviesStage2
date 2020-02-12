@@ -43,6 +43,8 @@ public class DetailActivity extends AppCompatActivity
     private RecyclerView reviewRecyclerView;
     private RecyclerView.LayoutManager trailerLayoutManager;
     private RecyclerView.LayoutManager reviewLayoutManager;
+    public static final String EXTRA_TRAILER = "trailerIntents";
+    public static final String EXTRA_REVIEW = "reviewIntents";
     private TrailersAdapter trailersAdapter;
     private ReviewsAdapter reviewsAdapter;
     private RequestQueue requestTrailerQueue;
@@ -51,6 +53,10 @@ public class DetailActivity extends AppCompatActivity
     private String reviewJsonPage;
     private Movie trailerKey;
     private Movie reviewId;
+    private Movie trailerIntentSetUp;
+    private Movie reviewIntentSetUp;
+    private int trailerPosition;
+    private int reviewPosition;
 
 
     @Override
@@ -134,7 +140,9 @@ public class DetailActivity extends AppCompatActivity
                                 String trailersKeyPath = results.getString("key");
 
                                 trailerKey = new Movie(trailersKeyPath);
-                                trailerList.add(new Movie(R.drawable.ic_play_arrow_black_24dp, "Trailer " + trailerList.iterator()));
+
+                                trailerList.add(trailerPosition, new Movie(R.drawable.ic_play_arrow_black_24dp, "Trailer " + trailerList.size()));
+
                             }
 
                             trailersAdapter = new TrailersAdapter(DetailActivity.this, trailerList);
@@ -169,8 +177,9 @@ public class DetailActivity extends AppCompatActivity
 
                                 String reviewsIdPath = results.getString("id");
 
+                                reviewList.add(reviewPosition, new Movie(R.drawable.ic_message_black_24dp, "Review " + reviewList.size()));
+
                                 reviewId = new Movie(reviewsIdPath);
-                                reviewList.add(new Movie(R.drawable.ic_message_black_24dp, "Review " + reviewList.iterator()));
                             }
 
                             reviewsAdapter = new ReviewsAdapter(DetailActivity.this, reviewList);
@@ -196,7 +205,6 @@ public class DetailActivity extends AppCompatActivity
     public void onLinkClick(int position) {
         Intent trailersIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=" + trailerKey.getKeyId()));
         startActivity(trailersIntent);
-
     }
 
     @Override

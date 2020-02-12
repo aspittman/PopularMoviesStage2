@@ -77,7 +77,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewIt
         Picasso.get().
                 load(descriptionButton).
                 placeholder(R.drawable.ic_local_movies_black_24dp).
-                error(R.drawable.ic_block_black_24dp).
+                error(R.drawable.ic_message_black_24dp).
                 into(holder.reviewImage);
         holder.reviewRowNumber.setText(review.getRowNumber());
 

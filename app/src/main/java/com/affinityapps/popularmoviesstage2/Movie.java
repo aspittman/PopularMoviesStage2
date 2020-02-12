@@ -1,5 +1,9 @@
 package com.affinityapps.popularmoviesstage2;
 
+
+import android.content.Intent;
+import java.util.ArrayList;
+
 public class Movie {
 
     private String movieImageUrl;
@@ -11,6 +15,7 @@ public class Movie {
     private int imagesForDetailLists;
     private String rowNumber;
     private String keyId;
+    private Intent dataPositions;
 
 
     public Movie (String movieImageUrl, String title, String releaseDate, int voteAverage, String plotSynopsis, int movieId) {
@@ -25,6 +30,10 @@ public class Movie {
     public Movie (int imagesForDetailLists, String rowNumber) {
         this.imagesForDetailLists = imagesForDetailLists;
         this.rowNumber = rowNumber;
+    }
+
+    public Movie (Intent dataPositions) {
+        this.dataPositions = dataPositions;
     }
 
     public Movie(String keyId) {
@@ -91,7 +100,14 @@ public class Movie {
 
     public void setRowNumber(String rowNumber) { this.rowNumber = rowNumber; }
 
+
     public String getKeyId() { return keyId; }
 
     public void setKeyId(String keyId) { this.keyId = keyId; }
+
+
+    public Intent getDataPositions() { return dataPositions; }
+
+    public void setDataPositions(Intent dataPositions) { this.dataPositions = dataPositions; }
+
 }

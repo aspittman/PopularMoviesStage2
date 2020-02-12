@@ -80,7 +80,7 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.Traile
         Picasso.get().
                 load(playButton).
                 placeholder(R.drawable.ic_local_movies_black_24dp).
-                error(R.drawable.ic_block_black_24dp).
+                error(R.drawable.ic_play_arrow_black_24dp).
                 into(holder.trailerImage);
         holder.trailerRowNumber.setText(trailer.getRowNumber());
     }
