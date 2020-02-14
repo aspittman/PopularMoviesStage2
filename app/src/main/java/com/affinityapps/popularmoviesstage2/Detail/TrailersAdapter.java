@@ -42,7 +42,7 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.Traile
         private ImageView trailerImage;
         private TextView trailerRowNumber;
 
-        public TrailerItemsViewHolder(@NonNull View itemView, ArrayList<Movie> trailersArrayList) {
+        public TrailerItemsViewHolder(@NonNull View itemView, final ArrayList<Movie> trailersArrayList) {
             super(itemView);
 
             trailerImage = itemView.findViewById(R.id.trailer_image_icon);
