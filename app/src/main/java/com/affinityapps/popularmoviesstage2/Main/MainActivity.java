@@ -2,6 +2,8 @@ package com.affinityapps.popularmoviesstage2.Main;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +15,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.affinityapps.popularmoviesstage2.Detail.DetailActivity;
+import com.affinityapps.popularmoviesstage2.Favorites.FavoriteActivity;
+import com.affinityapps.popularmoviesstage2.Favorites.FavoriteViewModel;
 import com.affinityapps.popularmoviesstage2.Movie;
 import com.affinityapps.popularmoviesstage2.R;
 import com.android.volley.Request;
@@ -55,7 +59,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnIt
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-
         requestQueue = Volley.newRequestQueue(this);
         parseMovieData(mostPopularUrl);
     }
@@ -121,8 +124,13 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnIt
                 movieData.clear();
                 parseMovieData(topRatedUrl);
                 movieAdapter.notifyDataSetChanged();
-                return true;
 
+            case R.id.favorites_option:
+                movieData.clear();
+                Intent intent = new Intent(this, FavoriteActivity.class);
+                startActivity(intent);
+                return true;
+                //Maybe use putExtra like onItemClick below
             default:
                 return super.onOptionsItemSelected(item);
         }
