@@ -4,6 +4,7 @@
     <string name="top_rated_title">Top Rated</string>
     <string name="favorites_title">Favorites</string>
     <string name="favorites_option">Add to Favorites</string>
+    <string name="unfavorites_option">Remove from Favorites</string>
 
     <!--Detail Items-->
     <string name="parsed_poster_icon">Movie Poster Image</string>

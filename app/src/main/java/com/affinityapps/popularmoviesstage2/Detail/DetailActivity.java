@@ -1,6 +1,8 @@
 package com.affinityapps.popularmoviesstage2.Detail;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.affinityapps.popularmoviesstage2.Favorites.Favorite;
 import com.affinityapps.popularmoviesstage2.Favorites.FavoriteAdapter;
@@ -30,6 +33,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.affinityapps.popularmoviesstage2.Main.MainActivity.EXTRA_MOVIE_ID;
 import static com.affinityapps.popularmoviesstage2.Main.MainActivity.EXTRA_PLOT_SYNOPSIS;
@@ -42,6 +46,7 @@ public class DetailActivity extends AppCompatActivity
         implements TrailersAdapter.OnLinkClickListener,
         ReviewsAdapter.OnDescriptionClickListener {
 
+    //List Variables below
     private ArrayList<Movie> trailerList;
     private ArrayList<Movie> reviewList;
     private RecyclerView trailerRecyclerView;
@@ -56,12 +61,17 @@ public class DetailActivity extends AppCompatActivity
     private String reviewJsonPage;
     private ArrayList<String> trailerIntentSetUp;
     private ArrayList<String> reviewIntentSetUp;
+
+    //DataBase Variables below
     private Movie movie;
     private Favorite favorite;
     private FavoriteViewModel favoriteViewModel;
     private Button favoriteButton;
+    private Button unfavoriteButton;
     private TextView favoriteTitle;
     private TextView favoriteId;
+    private FavoriteAdapter favoriteAdapter;
+    private List<Favorite> favoriteItemList;
 
 
     @Override
@@ -112,7 +122,10 @@ public class DetailActivity extends AppCompatActivity
         TextView textViewPlotSynopsis = findViewById(R.id.detail_plot_synopsis);
 
         //Favorite Database Options
+        favorite = new Favorite(movieTitle2);
+        favorite.setFavoritesId(movieId2);
         favoriteButton = findViewById(R.id.favorites_button);
+        unfavoriteButton = findViewById(R.id.unfavorites_button);
         favoriteTitle = findViewById(R.id.favorite_movie_title);
         favoriteId = findViewById(R.id.favorite_movie_id);
 
@@ -128,18 +141,45 @@ public class DetailActivity extends AppCompatActivity
         textViewPlotSynopsis.setText(moviePlotSynopsis2);
 
         //Favorite Database input
-//        favorite = new Favorite(movie.getTitle());
-//        favorite.setFavoritesId(movie.getMovieId());
-//
-//        favoriteButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                favoriteTitle.setText(movie.getTitle());
-////                favoriteId.setText(movie.getMovieId());
-//                favoriteViewModel.insert(favorite);
-//
-//            }
-//        });
+        favoriteViewModel = new ViewModelProvider(this).get(FavoriteViewModel.class);
+        favoriteViewModel.getAllFavorites().observe(this, new Observer<List<Favorite>>() {
+            @Override
+            public void onChanged(List<Favorite> favorites) {
+                if(favorites != null) {
+                    if (favoriteAdapter != null) {
+                        if (favoriteItemList == null) {
+                            favoriteItemList = new ArrayList<>();
+                        }
+                        favoriteItemList.clear();
+                        favoriteItemList.addAll(favorites);
+                    }
+                }
+            }
+        });
+
+
+        favoriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(favorite.getFavoritesId() != movieId2) {
+                    favoriteViewModel.insert(favorite);
+                    favoriteViewModel.update(favorite);
+                } else {
+                    Toast.makeText(DetailActivity.this, "Already Added to Favorites", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        unfavoriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                favoriteViewModel.delete(favorite);
+                favoriteViewModel.update(favorite);
+            }
+        });
+
 
         requestTrailerQueue = Volley.newRequestQueue(this);
         parseTrailerData(trailerJsonPage);
@@ -147,6 +187,7 @@ public class DetailActivity extends AppCompatActivity
         requestReviewQueue = Volley.newRequestQueue(this);
         parseReviewData(reviewJsonPage);
     }
+
 
     public void parseTrailerData(String url) {
 

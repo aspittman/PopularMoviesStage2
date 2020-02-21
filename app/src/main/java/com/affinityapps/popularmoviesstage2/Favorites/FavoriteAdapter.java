@@ -19,16 +19,6 @@ import java.util.List;
 public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.FavoriteItemsViewHolder> {
 
     private List<Favorite> favorites = new ArrayList<>();
-    private OnSelectedClickListener listener;
-
-
-    public interface OnSelectedClickListener {
-        void onSelectClick(int position);
-    }
-
-    public void setOnSelectedClickListener(OnSelectedClickListener listener) {
-        this.listener = listener;
-    }
 
 
     public class FavoriteItemsViewHolder extends RecyclerView.ViewHolder {
@@ -43,17 +33,6 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
             favoriteTitleTextView = itemView.findViewById(R.id.favorite_movie_title);
             favoriteIdTextView = itemView.findViewById(R.id.favorite_movie_id);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(listener != null) {
-                        int position = getAdapterPosition();
-                        if(position != RecyclerView.NO_POSITION) {
-                            listener.onSelectClick(position);
-                        }
-                    }
-                }
-            });
         }
     }
 
@@ -71,12 +50,16 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
 
         Favorite favorite = favorites.get(position);
         holder.favoriteTitleTextView.setText(favorite.getFavoritesTitle());
-        holder.favoriteIdTextView.setText(favorite.getFavoritesId());
+        holder.favoriteIdTextView.setText(String.valueOf(favorite.getFavoritesId()));
     }
 
     public void setFavorites(List<Favorite> favorites) {
         this.favorites = favorites;
         notifyDataSetChanged();
+    }
+
+    public Favorite getFavoritesAt(int position) {
+        return favorites.get(position);
     }
 
     @Override

@@ -68,9 +68,21 @@
         android:layout_marginLeft="32dp"
         android:layout_marginTop="32dp"
         android:background="@color/colorGlowGreen"
-        android:text="@string/favorites_title"
+        android:text="@string/favorites_option"
         app:layout_constraintStart_toEndOf="@+id/detail_movie_poster"
         app:layout_constraintTop_toBottomOf="@+id/detail_vote_average" />
+
+    <Button
+        android:id="@+id/unfavorites_button"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="32dp"
+        android:background="@color/colorGlowRed"
+        android:text="@string/unfavorites_option"
+        app:layout_constraintStart_toEndOf="@+id/detail_movie_poster"
+        app:layout_constraintTop_toBottomOf="@+id/favorites_button" />
 
     <TextView
         android:id="@+id/detail_plot_synopsis"
