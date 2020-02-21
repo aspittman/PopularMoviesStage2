@@ -124,12 +124,13 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnIt
                 movieData.clear();
                 parseMovieData(topRatedUrl);
                 movieAdapter.notifyDataSetChanged();
+                return true;
 
             case R.id.favorites_option:
                 movieData.clear();
                 Intent intent = new Intent(this, FavoriteActivity.class);
                 startActivity(intent);
-                return true;
+
                 //Maybe use putExtra like onItemClick below
             default:
                 return super.onOptionsItemSelected(item);

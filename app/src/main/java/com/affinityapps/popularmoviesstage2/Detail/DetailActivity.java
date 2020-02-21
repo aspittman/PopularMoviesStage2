@@ -7,9 +7,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.affinityapps.popularmoviesstage2.Favorites.Favorite;
+import com.affinityapps.popularmoviesstage2.Favorites.FavoriteAdapter;
+import com.affinityapps.popularmoviesstage2.Favorites.FavoriteViewModel;
 import com.affinityapps.popularmoviesstage2.Movie;
 import com.affinityapps.popularmoviesstage2.R;
 import com.android.volley.Request;
@@ -51,10 +56,12 @@ public class DetailActivity extends AppCompatActivity
     private String reviewJsonPage;
     private ArrayList<String> trailerIntentSetUp;
     private ArrayList<String> reviewIntentSetUp;
-    private Movie trailerKey;
-    private Movie reviewId;
-    private int trailerPosition;
-    private int reviewPosition;
+    private Movie movie;
+    private Favorite favorite;
+    private FavoriteViewModel favoriteViewModel;
+    private Button favoriteButton;
+    private TextView favoriteTitle;
+    private TextView favoriteId;
 
 
     @Override
@@ -86,25 +93,30 @@ public class DetailActivity extends AppCompatActivity
 
         Intent intent = getIntent();
         String movieImageUrl2 = intent.getStringExtra(EXTRA_URL);
-        String movieTitle2 = intent.getStringExtra(EXTRA_TITLE);
+        final String movieTitle2 = intent.getStringExtra(EXTRA_TITLE);
         String movieReleaseDate2 = intent.getStringExtra(EXTRA_RELEASE_DATE);
         int movieVoteAverage2 = intent.getIntExtra(EXTRA_VOTE_AVERAGE, 0);
         String moviePlotSynopsis2 = intent.getStringExtra(EXTRA_PLOT_SYNOPSIS);
 
 
         //Movie id below gets parsed into the url for reviews and trailers
-        int movieId2 = intent.getIntExtra(EXTRA_MOVIE_ID, 0);
+        final int movieId2 = intent.getIntExtra(EXTRA_MOVIE_ID, 0);
         trailerJsonPage = "https://api.themoviedb.org/3/movie/"+movieId2+"/videos?api_key=0985d7dead91a911264472433eb9c5dc";
         reviewJsonPage = "https://api.themoviedb.org/3/movie/"+movieId2+"/reviews?api_key=0985d7dead91a911264472433eb9c5dc";
 
-
+        //Detail Activity Options
         ImageView imageView = findViewById(R.id.detail_movie_poster);
         TextView textViewTitle = findViewById(R.id.detail_movie_title);
         TextView textViewReleaseDate = findViewById(R.id.detail_release_date);
         TextView textViewVoteAverage = findViewById(R.id.detail_vote_average);
         TextView textViewPlotSynopsis = findViewById(R.id.detail_plot_synopsis);
 
+        //Favorite Database Options
+        favoriteButton = findViewById(R.id.favorites_button);
+        favoriteTitle = findViewById(R.id.favorite_movie_title);
+        favoriteId = findViewById(R.id.favorite_movie_id);
 
+        //Detail Activity Input
         Picasso.get().load(movieImageUrl2).
                 placeholder(R.drawable.ic_local_movies_black_24dp).
                 error(R.drawable.ic_block_black_24dp).
@@ -115,6 +127,19 @@ public class DetailActivity extends AppCompatActivity
         textViewVoteAverage.setText(movieVoteAverage2 + "/10");
         textViewPlotSynopsis.setText(moviePlotSynopsis2);
 
+        //Favorite Database input
+//        favorite = new Favorite(movie.getTitle());
+//        favorite.setFavoritesId(movie.getMovieId());
+//
+//        favoriteButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                favoriteTitle.setText(movie.getTitle());
+////                favoriteId.setText(movie.getMovieId());
+//                favoriteViewModel.insert(favorite);
+//
+//            }
+//        });
 
         requestTrailerQueue = Volley.newRequestQueue(this);
         parseTrailerData(trailerJsonPage);

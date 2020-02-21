@@ -10,10 +10,10 @@ public class Favorite {
     @PrimaryKey(autoGenerate = true)
     private int favoritesId;
 
-    private int favoritesTitle;
+    private String favoritesTitle;
 
 
-    public Favorite(int favoritesTitle) {
+    public Favorite(String favoritesTitle) {
         this.favoritesTitle = favoritesTitle;
     }
 
@@ -26,7 +26,7 @@ public class Favorite {
         return favoritesId;
     }
 
-    public int getFavoritesTitle() {
+    public String getFavoritesTitle() {
         return favoritesTitle;
     }
 
