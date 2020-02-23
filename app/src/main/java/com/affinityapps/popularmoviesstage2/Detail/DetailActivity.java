@@ -72,6 +72,8 @@ public class DetailActivity extends AppCompatActivity
     private TextView favoriteId;
     private FavoriteAdapter favoriteAdapter;
     private List<Favorite> favoriteItemList;
+    private Boolean favoriteButtonControl;
+
 
 
     @Override
@@ -128,6 +130,7 @@ public class DetailActivity extends AppCompatActivity
         unfavoriteButton = findViewById(R.id.unfavorites_button);
         favoriteTitle = findViewById(R.id.favorite_movie_title);
         favoriteId = findViewById(R.id.favorite_movie_id);
+        favoriteButtonControl = false;
 
         //Detail Activity Input
         Picasso.get().load(movieImageUrl2).
@@ -162,12 +165,12 @@ public class DetailActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
 
-                if(favorite.getFavoritesId() != movieId2) {
-                    favoriteViewModel.insert(favorite);
                     favoriteViewModel.update(favorite);
-                } else {
-                    Toast.makeText(DetailActivity.this, "Already Added to Favorites", Toast.LENGTH_SHORT).show();
-                }
+                    favoriteViewModel.insert(favorite);
+
+                    Toast.makeText(DetailActivity.this, "Added to favorites", Toast.LENGTH_SHORT).show();
+
+
             }
         });
 
@@ -175,11 +178,12 @@ public class DetailActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
 
-                favoriteViewModel.delete(favorite);
-                favoriteViewModel.update(favorite);
+                    favoriteViewModel.update(favorite);
+                    favoriteViewModel.delete(favorite);
+
+                Toast.makeText(DetailActivity.this, "Removed from Favorites", Toast.LENGTH_SHORT).show();
             }
         });
-
 
         requestTrailerQueue = Volley.newRequestQueue(this);
         parseTrailerData(trailerJsonPage);
